@@ -8,8 +8,8 @@ import SwiftUI
 
 /// View for adding new contacts.
 struct AddFolioView: View {
-    @State private var nameInput: String = ""
-    @State private var phoneInput: String = ""
+    @State private var titleInput: String = ""
+    @State private var descInput: String = ""
 
     /// Callback after user selects to add contact with given name and phone number.
     let onAdd: ((String, String) async throws -> Void)?
@@ -19,10 +19,8 @@ struct AddFolioView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Full Name", text: $nameInput)
-                    .textContentType(.name)
-                TextField("Phone Number", text: $phoneInput)
-                    .textContentType(.telephoneNumber)
+                TextField("Folio Name", text: $titleInput)
+                TextField("Description", text: $descInput)
                 Spacer()
             }
             .padding()
@@ -32,8 +30,8 @@ struct AddFolioView: View {
                     Button("Cancel", action: { onCancel?() })
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save", action: { Task { try? await onAdd?(nameInput, phoneInput) } })
-                        .disabled(nameInput.isEmpty || phoneInput.isEmpty)
+                    Button("Save", action: { Task { try? await onAdd?(titleInput, descInput) } })
+                        .disabled(titleInput.isEmpty || descInput.isEmpty)
                 }
             }
         }

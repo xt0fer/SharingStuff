@@ -20,7 +20,7 @@ final class ViewModel: ObservableObject {
 
     enum State {
         case loading
-        case loaded(private: [Contact], shared: [Contact])
+        case loaded(private: [Folio], shared: [Folio])
         case error(Error)
     }
 
@@ -33,7 +33,7 @@ final class ViewModel: ObservableObject {
     /// This project uses the user's private database.
     private lazy var database = container.privateCloudDatabase
     /// Sharing requires using a custom record zone.
-    let recordZone = CKRecordZone(zoneName: "Contacts")
+    let recordZone = CKRecordZone(zoneName: "Folios")
 
     // MARK: - Init
 
@@ -59,8 +59,8 @@ final class ViewModel: ObservableObject {
     func refresh() async throws {
         state = .loading
         do {
-            let (privateContacts, sharedContacts) = try await fetchPrivateAndSharedContacts()
-            state = .loaded(private: privateContacts, shared: sharedContacts)
+            let (privateFolios, sharedFolios) = try await fetchPrivateAndSharedFolios()
+            state = .loaded(private: privateFolios, shared: sharedFolios)
         } catch {
             state = .error(error)
         }
@@ -68,41 +68,41 @@ final class ViewModel: ObservableObject {
 
     /// Fetches both private and shared contacts in parallel.
     /// - Returns: A tuple containing separated private and shared contacts.
-    func fetchPrivateAndSharedContacts() async throws -> (private: [Contact], shared: [Contact]) {
+    func fetchPrivateAndSharedFolios() async throws -> (private: [Folio], shared: [Folio]) {
         // This will run each of these operations in parallel.
-        async let privateContacts = fetchContacts(scope: .private, in: [recordZone])
-        async let sharedContacts = fetchSharedContacts()
+        async let privateFolios = fetchFolios(scope: .private, in: [recordZone])
+        async let sharedFolios = fetchSharedFolios()
 
-        return (private: try await privateContacts, shared: try await sharedContacts)
+        return (private: try await privateFolios, shared: try await sharedFolios)
     }
 
-    /// Adds a new Contact to the database.
+    /// Adds a new Folio to the database.
     /// - Parameters:
-    ///   - name: Name of the Contact.
+    ///   - name: Name of the Folio.
     ///   - phoneNumber: Phone number of the contact.
-    func addContact(name: String, phoneNumber: String) async throws {
+    func addFolio(title: String, desc: String) async throws {
         let id = CKRecord.ID(zoneID: recordZone.zoneID)
-        let contactRecord = CKRecord(recordType: "SharedContact", recordID: id)
-        contactRecord["name"] = name
-        contactRecord["phoneNumber"] = phoneNumber
+        let folioRecord = CKRecord(recordType: "SharedFolio", recordID: id)
+        folioRecord["title"] = title
+        folioRecord["desc"] = desc
 
         do {
-            try await database.save(contactRecord)
+            try await database.save(folioRecord)
         } catch {
-            debugPrint("ERROR: Failed to save new Contact: \(error)")
+            debugPrint("ERROR: Failed to save new Folio: \(error)")
             throw error
         }
     }
 
-    /// Fetches an existing `CKShare` on a Contact record, or creates a new one in preparation to share a Contact with another user.
+    /// Fetches an existing `CKShare` on a Folio record, or creates a new one in preparation to share a Folio with another user.
     /// - Parameters:
-    ///   - contact: Contact to share.
+    ///   - contact: Folio to share.
     ///   - completionHandler: Handler to process a `success` or `failure` result.
-    func fetchOrCreateShare(contact: Contact) async throws -> (CKShare, CKContainer) {
-        guard let existingShare = contact.associatedRecord.share else {
-            let share = CKShare(rootRecord: contact.associatedRecord)
-            share[CKShare.SystemFieldKey.title] = "Contact: \(contact.name)"
-            _ = try await database.modifyRecords(saving: [contact.associatedRecord, share], deleting: [])
+    func fetchOrCreateShare(folio: Folio) async throws -> (CKShare, CKContainer) {
+        guard let existingShare = folio.associatedRecord.share else {
+            let share = CKShare(rootRecord: folio.associatedRecord)
+            share[CKShare.SystemFieldKey.title] = "Folio: \(folio.title)"
+            _ = try await database.modifyRecords(saving: [folio.associatedRecord, share], deleting: [])
             return (share, container)
         }
 
@@ -120,16 +120,16 @@ final class ViewModel: ObservableObject {
     ///   - scope: Database scope to fetch from.
     ///   - zones: Record zones to fetch contacts from.
     /// - Returns: Combined set of contacts across all given zones.
-    private func fetchContacts(
+    private func fetchFolios(
         scope: CKDatabase.Scope,
         in zones: [CKRecordZone]
-    ) async throws -> [Contact] {
+    ) async throws -> [Folio] {
         let database = container.database(with: scope)
-        var allContacts: [Contact] = []
+        var allFolios: [Folio] = []
 
-        // Inner function retrieving and converting all Contact records for a single zone.
-        @Sendable func contactsInZone(_ zone: CKRecordZone) async throws -> [Contact] {
-            var allContacts: [Contact] = []
+        // Inner function retrieving and converting all Folio records for a single zone.
+        @Sendable func contactsInZone(_ zone: CKRecordZone) async throws -> [Folio] {
+            var allFolios: [Folio] = []
 
             /// `recordZoneChanges` can return multiple consecutive changesets before completing, so
             /// we use a loop to process multiple results if needed, indicated by the `moreComing` flag.
@@ -141,18 +141,18 @@ final class ViewModel: ObservableObject {
                 let zoneChanges = try await database.recordZoneChanges(inZoneWith: zone.zoneID, since: nextChangeToken)
                 let contacts = zoneChanges.modificationResultsByID.values
                     .compactMap { try? $0.get().record }
-                    .compactMap { Contact(record: $0) }
-                allContacts.append(contentsOf: contacts)
+                    .compactMap { Folio(record: $0) }
+                allFolios.append(contentsOf: contacts)
 
                 awaitingChanges = zoneChanges.moreComing
                 nextChangeToken = zoneChanges.changeToken
             }
 
-            return allContacts
+            return allFolios
         }
 
         // Using this task group, fetch each zone's contacts in parallel.
-        try await withThrowingTaskGroup(of: [Contact].self) { group in
+        try await withThrowingTaskGroup(of: [Folio].self) { group in
             for zone in zones {
                 group.addTask {
                     try await contactsInZone(zone)
@@ -161,21 +161,21 @@ final class ViewModel: ObservableObject {
 
             // As each result comes back, append it to a combined array to finally return.
             for try await contactsResult in group {
-                allContacts.append(contentsOf: contactsResult)
+                allFolios.append(contentsOf: contactsResult)
             }
         }
 
-        return allContacts
+        return allFolios
     }
 
-    /// Fetches all shared Contacts from all available record zones.
-    private func fetchSharedContacts() async throws -> [Contact] {
+    /// Fetches all shared Folios from all available record zones.
+    private func fetchSharedFolios() async throws -> [Folio] {
         let sharedZones = try await container.sharedCloudDatabase.allRecordZones()
         guard !sharedZones.isEmpty else {
             return []
         }
 
-        return try await fetchContacts(scope: .shared, in: sharedZones)
+        return try await fetchFolios(scope: .shared, in: sharedZones)
     }
 
     /// Creates the custom zone in use if needed.

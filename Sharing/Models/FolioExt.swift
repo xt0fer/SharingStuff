@@ -18,13 +18,13 @@ extension Folio {
     /// - Parameter record: CloudKit record to pull values from.
     convenience init?(record: CKRecord) {
         guard let title = record["title"] as? String,
-              let phoneNumber = record["phoneNumber"] as? String else {
+              let desc = record["desc"] as? String else {
             return nil
         }
 
-        self.id = record.recordID.recordName
+        //self.id = record.recordID.recordName
         self.title = title
         //self.phoneNumber = phoneNumber
-        self.associatedRecord = record
+        //self.associatedRecord = record
     }
 }

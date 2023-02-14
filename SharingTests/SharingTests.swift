@@ -70,37 +70,37 @@ class SharingTests: XCTestCase {
 
     func testCreatingShare() async throws {
         // Create a temporary contact to create the share on.
-        try await createTestContact()
+        try await createTestFolio()
         // Fetch private contacts, which should now contain the temporary contact.
-        let privateContacts = try await fetchPrivateContacts()
+        let privateFolios = try await fetchPrivateFolios()
 
-        guard let testContact = privateContacts.first(where: { $0.name == self.testContactName }) else {
-            XCTFail("No matching test Contact found after fetching private contacts")
+        guard let testFolio = privateFolios.first(where: { $0.title == self.testFolioName }) else {
+            XCTFail("No matching test Folio found after fetching private contacts")
             return
         }
 
-        idsToDelete.append(testContact.associatedRecord.recordID)
+        idsToDelete.append(testFolio.associatedRecord.recordID)
 
-        let (share, _) = try await viewModel.fetchOrCreateShare(contact: testContact)
+        let (share, _) = try await viewModel.fetchOrCreateShare(contact: testFolio)
 
         idsToDelete.append(share.recordID)
     }
 
     // MARK: - Helpers
 
-    /// For testing creating a `CKShare`, we need to create a `Contact` with a name we can reference later.
-    private lazy var testContactName: String = {
+    /// For testing creating a `CKShare`, we need to create a `Folio` with a name we can reference later.
+    private lazy var testFolioName: String = {
         "Test\(UUID().uuidString)"
     }()
 
-    /// Simple function to create and save a new `Contact` to test with. Immediately fails on any error.
-    private func createTestContact() async throws {
-        try await viewModel.addContact(name: testContactName, phoneNumber: "555-123-4567")
+    /// Simple function to create and save a new `Folio` to test with. Immediately fails on any error.
+    private func createTestFolio() async throws {
+        try await viewModel.addFolio(name: testFolioName, phoneNumber: "555-123-4567")
     }
 
     /// Uses the ViewModel to fetch only private contacts. Immediately fails on any error.
     /// - Parameter completion: Handler called on completion.
-    private func fetchPrivateContacts() async throws -> [Contact] {
-        try await viewModel.fetchPrivateAndSharedContacts().private
+    private func fetchPrivateFolios() async throws -> [Folio] {
+        try await viewModel.fetchPrivateAndSharedFolios().private
     }
 }

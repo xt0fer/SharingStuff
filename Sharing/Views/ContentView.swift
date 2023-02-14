@@ -12,7 +12,7 @@ struct ContentView: View {
 
     @EnvironmentObject private var vm: ViewModel
 
-    @State private var isAddingContact = false
+    @State private var isAddingFolio = false
     @State private var isSharing = false
     @State private var isProcessingShare = false
 
@@ -24,7 +24,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             contentView
-                .navigationTitle("Contacts")
+                .navigationTitle("Folios")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button { Task { try await vm.refresh() } } label: { Image(systemName: "arrow.clockwise") }
@@ -33,7 +33,7 @@ struct ContentView: View {
                         progressView
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: { isAddingContact = true }) { Image(systemName: "plus") }
+                        Button(action: { isAddingFolio = true }) { Image(systemName: "plus") }
                     }
                 }
         }
@@ -44,8 +44,8 @@ struct ContentView: View {
                 try await vm.refresh()
             }
         }
-        .sheet(isPresented: $isAddingContact, content: {
-            AddContactView(onAdd: addContact, onCancel: { isAddingContact = false })
+        .sheet(isPresented: $isAddingFolio, content: {
+            AddFolioView(onAdd: addFolio, onCancel: { isAddingFolio = false })
         })
     }
 
@@ -72,13 +72,13 @@ struct ContentView: View {
     private var contentView: some View {
         Group {
             switch vm.state {
-            case let .loaded(privateContacts, sharedContacts):
+            case let .loaded(privateFolios, sharedFolios):
                 List {
                     Section(header: Text("Private")) {
-                        ForEach(privateContacts) { contactRowView(for: $0) }
+                        ForEach(privateFolios) { contactRowView(for: $0) }
                     }
                     Section(header: Text("Shared")) {
-                        ForEach(sharedContacts) { contactRowView(for: $0, shareable: false) }
+                        ForEach(sharedFolios) { contactRowView(for: $0, shareable: false) }
                     }
                 }.listStyle(GroupedListStyle())
 
@@ -103,8 +103,8 @@ struct ContentView: View {
         return CloudSharingView(container: container, share: share)
     }
 
-    /// Builds a Contact row view for display contact information in a List.
-    private func contactRowView(for contact: Contact, shareable: Bool = true) -> some View {
+    /// Builds a Folio row view for display contact information in a List.
+    private func contactRowView(for contact: Folio, shareable: Bool = true) -> some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(contact.name)
@@ -114,7 +114,7 @@ struct ContentView: View {
             }
             if shareable {
                 Spacer()
-                Button(action: { Task { try? await shareContact(contact) } }, label: { Image(systemName: "square.and.arrow.up") }).buttonStyle(BorderlessButtonStyle())
+                Button(action: { Task { try? await shareFolio(contact) } }, label: { Image(systemName: "square.and.arrow.up") }).buttonStyle(BorderlessButtonStyle())
                     .sheet(isPresented: $isSharing, content: { shareView() })
             }
         }
@@ -122,13 +122,13 @@ struct ContentView: View {
 
     // MARK: - Actions
 
-    private func addContact(name: String, phoneNumber: String) async throws {
-        try await vm.addContact(name: name, phoneNumber: phoneNumber)
+    private func addFolio(name: String, phoneNumber: String) async throws {
+        try await vm.addFolio(name: name, phoneNumber: phoneNumber)
         try await vm.refresh()
-        isAddingContact = false
+        isAddingFolio = false
     }
 
-    private func shareContact(_ contact: Contact) async throws {
+    private func shareFolio(_ contact: Folio) async throws {
         isProcessingShare = true
 
         do {
@@ -144,17 +144,17 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    private static let previewContacts: [Contact] = [
-        Contact(
+    private static let previewFolios: [Folio] = [
+        Folio(
             id: UUID().uuidString,
             name: "John Appleseed",
             phoneNumber: "(888) 555-5512",
-            associatedRecord: CKRecord(recordType: "SharedContact")
+            associatedRecord: CKRecord(recordType: "SharedFolio")
         )
     ]
 
     static var previews: some View {
         ContentView()
-            .environmentObject(ViewModel(state: .loaded(private: previewContacts, shared: previewContacts)))
+            .environmentObject(ViewModel(state: .loaded(private: previewFolios, shared: previewFolios)))
     }
 }

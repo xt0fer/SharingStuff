@@ -15,8 +15,8 @@
 		F415D56E260A614D002C3249 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D56D260A614D002C3249 /* ViewModel.swift */; };
 		F415D572260A616D002C3249 /* CloudSharingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D56F260A616D002C3249 /* CloudSharingView.swift */; };
 		F415D573260A616D002C3249 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D570260A616D002C3249 /* ContentView.swift */; };
-		F415D574260A616D002C3249 /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D571260A616D002C3249 /* AddContactView.swift */; };
-		F415D576260A6174002C3249 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D575260A6174002C3249 /* Contact.swift */; };
+		F415D574260A616D002C3249 /* AddFolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D571260A616D002C3249 /* AddFolioView.swift */; };
+		F415D576260A6174002C3249 /* FolioExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D575260A6174002C3249 /* FolioExt.swift */; };
 		F415D578260A61C7002C3249 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D577260A61C7002C3249 /* Config.swift */; };
 		F415D58026115C8B002C3249 /* SharingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D57F26115C8B002C3249 /* SharingTests.swift */; };
 /* End PBXBuildFile section */
@@ -43,8 +43,8 @@
 		F415D56D260A614D002C3249 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F415D56F260A616D002C3249 /* CloudSharingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSharingView.swift; sourceTree = "<group>"; };
 		F415D570260A616D002C3249 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		F415D571260A616D002C3249 /* AddContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
-		F415D575260A6174002C3249 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		F415D571260A616D002C3249 /* AddFolioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFolioView.swift; sourceTree = "<group>"; };
+		F415D575260A6174002C3249 /* FolioExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolioExt.swift; sourceTree = "<group>"; };
 		F415D577260A61C7002C3249 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		F415D57D26115C8B002C3249 /* SharingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F415D57F26115C8B002C3249 /* SharingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingTests.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				5C0E0AB2299BCC8900C0B9AC /* TiogaFolios.xcdatamodeld */,
-				F415D575260A6174002C3249 /* Contact.swift */,
+				F415D575260A6174002C3249 /* FolioExt.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -112,7 +112,7 @@
 		F415D566260A6095002C3249 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F415D571260A616D002C3249 /* AddContactView.swift */,
+				F415D571260A616D002C3249 /* AddFolioView.swift */,
 				F415D56F260A616D002C3249 /* CloudSharingView.swift */,
 				F415D570260A616D002C3249 /* ContentView.swift */,
 			);
@@ -259,11 +259,11 @@
 				F415D552260A602F002C3249 /* AppDelegate.swift in Sources */,
 				F415D573260A616D002C3249 /* ContentView.swift in Sources */,
 				F415D554260A602F002C3249 /* SceneDelegate.swift in Sources */,
-				F415D576260A6174002C3249 /* Contact.swift in Sources */,
+				F415D576260A6174002C3249 /* FolioExt.swift in Sources */,
 				F415D578260A61C7002C3249 /* Config.swift in Sources */,
 				5C0E0AB4299BCC8900C0B9AC /* TiogaFolios.xcdatamodeld in Sources */,
 				F415D56E260A614D002C3249 /* ViewModel.swift in Sources */,
-				F415D574260A616D002C3249 /* AddContactView.swift in Sources */,
+				F415D574260A616D002C3249 /* AddFolioView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
