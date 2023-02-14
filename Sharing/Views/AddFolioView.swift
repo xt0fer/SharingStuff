@@ -1,5 +1,5 @@
 //
-//  AddContactView.swift
+//  AddFolioView.swift
 //  (cloudkit-samples) Sharing
 //
 
@@ -7,7 +7,7 @@ import Foundation
 import SwiftUI
 
 /// View for adding new contacts.
-struct AddContactView: View {
+struct AddFolioView: View {
     @State private var nameInput: String = ""
     @State private var phoneInput: String = ""
 
@@ -26,7 +26,7 @@ struct AddContactView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("Add Contact")
+            .navigationTitle("Add Folio")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel", action: { onCancel?() })
