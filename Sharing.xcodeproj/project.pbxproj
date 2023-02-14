@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C0E0AB4299BCC8900C0B9AC /* TiogaFolios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E0AB2299BCC8900C0B9AC /* TiogaFolios.xcdatamodeld */; };
 		F415D552260A602F002C3249 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D551260A602F002C3249 /* AppDelegate.swift */; };
 		F415D554260A602F002C3249 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F415D553260A602F002C3249 /* SceneDelegate.swift */; };
 		F415D558260A6032002C3249 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F415D557260A6032002C3249 /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5C0E0AB3299BCC8900C0B9AC /* TiogaFolios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TiogaFolios.xcdatamodel; sourceTree = "<group>"; };
 		F415D54E260A602F002C3249 /* Sharing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F415D551260A602F002C3249 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F415D553260A602F002C3249 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		F415D565260A6090002C3249 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5C0E0AB2299BCC8900C0B9AC /* TiogaFolios.xcdatamodeld */,
 				F415D575260A6174002C3249 /* Contact.swift */,
 			);
 			path = Models;
@@ -258,6 +261,7 @@
 				F415D554260A602F002C3249 /* SceneDelegate.swift in Sources */,
 				F415D576260A6174002C3249 /* Contact.swift in Sources */,
 				F415D578260A61C7002C3249 /* Config.swift in Sources */,
+				5C0E0AB4299BCC8900C0B9AC /* TiogaFolios.xcdatamodeld in Sources */,
 				F415D56E260A614D002C3249 /* ViewModel.swift in Sources */,
 				F415D574260A616D002C3249 /* AddContactView.swift in Sources */,
 			);
@@ -405,14 +409,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sharing/App/Sharing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S7ZKK95T9U;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sharing/App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.apple.samples.cloudkit.sharing;
+				PRODUCT_BUNDLE_IDENTIFIER = co.tioga.SharingStuff;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -426,14 +430,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Sharing/App/Sharing.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = S7ZKK95T9U;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sharing/App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.apple.samples.cloudkit.sharing;
+				PRODUCT_BUNDLE_IDENTIFIER = co.tioga.SharingStuff;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -509,6 +513,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5C0E0AB2299BCC8900C0B9AC /* TiogaFolios.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5C0E0AB3299BCC8900C0B9AC /* TiogaFolios.xcdatamodel */,
+			);
+			currentVersion = 5C0E0AB3299BCC8900C0B9AC /* TiogaFolios.xcdatamodel */;
+			path = TiogaFolios.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F415D546260A602F002C3249 /* Project object */;
 }
